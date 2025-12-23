@@ -1,0 +1,31 @@
+
+trigger: none
+
+pool: default
+
+stages:
+  - stage: stage1
+    displayName: terraform intall
+    jobs:
+      - job: job1
+        displayName: terraforminstall
+        steps:
+        - task: TerraformInstaller@1
+          inputs:
+            terraformVersion: 'latest'
+      - job: job2
+        displayName: terraforminit
+        steps:
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
+            backendServiceArm: 'myserviceconnection'
+            backendAzureRmStorageAccountName: 'devstg4'
+            backendAzureRmContainerName: 'devcontainer'
+            backendAzureRmKey: 'ahmad.tfstate'
+
+
+
+
